@@ -7,7 +7,7 @@ This file provides guidance to WARP (warp.dev) when working with code in this re
 ### Development Setup
 ```bash
 # Clone and setup
-git clone <repository-url>
+git clone https://github.com/Yoy20-New/travel-tourism-app.git
 cd travel-tourism-app
 
 # Environment setup
