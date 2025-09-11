@@ -1,0 +1,302 @@
+// This Prisma schema defines the PostgreSQL data model for the Travel & Tourism app
+// Run migrations with: npm run db:migrate (after setting DATABASE_URL)
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id               String   @id @default(uuid())
+  email            String   @unique
+  firstName        String
+  lastName         String
+  phone            String?  @unique
+  role             UserRole @default(USER)
+  isEmailVerified  Boolean  @default(false)
+  passwordHash     String?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  // Relations
+  trips            Trip[]
+  bookings         Booking[]
+  reviews          Review[]
+  guideProfile     Guide?
+  subscriptions    Subscription[]
+
+  @@index([email])
+}
+
+enum UserRole {
+  USER
+  ADMIN
+  GUIDE
+}
+
+model Trip {
+  id           String       @id @default(uuid())
+  userId       String
+  tripNumber   String
+  originName   String
+  originLat    Float
+  originLng    Float
+  destName     String
+  destLat      Float
+  destLng      Float
+  startTime    DateTime
+  endTime      DateTime?
+  mode         TransportMode
+  purpose      TripPurpose
+  notes        String?
+  isCompleted  Boolean      @default(false)
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+
+  // Relations
+  user         User         @relation(fields: [userId], references: [id])
+  companions   Companion[]
+
+  @@index([userId, startTime])
+}
+
+enum TransportMode {
+  WALKING
+  BICYCLE
+  MOTORCYCLE
+  CAR
+  BUS
+  TRAIN
+  FLIGHT
+  BOAT
+  OTHER
+}
+
+enum TripPurpose {
+  LEISURE
+  BUSINESS
+  CULTURAL
+  RELIGIOUS
+  EDUCATIONAL
+  MEDICAL
+  SHOPPING
+  FAMILY
+  OTHER
+}
+
+model Companion {
+  id      String @id @default(uuid())
+  tripId  String
+  name    String
+  age     Int
+  relation String
+
+  trip    Trip   @relation(fields: [tripId], references: [id], onDelete: Cascade)
+}
+
+model Guide {
+  id              String   @id @default(uuid())
+  userId          String   @unique
+  bio             String
+  specializations String[]
+  languages       String[]
+  experience      Int      // years
+  rating          Float    @default(0)
+  totalBookings   Int      @default(0)
+  pricePerHour    Float
+  isVerified      Boolean  @default(false)
+  photos          String[]
+  certifications  String[]
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  // Relations
+  user            User     @relation(fields: [userId], references: [id])
+  availability    GuideAvailability[]
+  reviews         Review[]
+  bookings        Booking[]
+}
+
+model GuideAvailability {
+  id        String   @id @default(uuid())
+  guideId   String
+  date      DateTime
+  startTime String
+  endTime   String
+  isBooked  Boolean  @default(false)
+
+  guide     Guide    @relation(fields: [guideId], references: [id], onDelete: Cascade)
+
+  @@index([guideId, date])
+}
+
+model Booking {
+  id             String        @id @default(uuid())
+  userId         String
+  guideId        String
+  date           DateTime
+  startTime      String
+  endTime        String
+  latitude       Float
+  longitude      Float
+  locationName   String
+  groupSize      Int
+  totalAmount    Float
+  status         BookingStatus @default(PENDING)
+  specialRequests String?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  // Relations
+  user           User          @relation(fields: [userId], references: [id])
+  guide          Guide         @relation(fields: [guideId], references: [id])
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+  REFUNDED
+}
+
+model Review {
+  id         String   @id @default(uuid())
+  userId     String
+  guideId    String?
+  packageId  String?
+  rating     Int
+  comment    String
+  photos     String[]
+  isVerified Boolean  @default(false)
+  createdAt  DateTime @default(now())
+
+  // Relations
+  user       User     @relation(fields: [userId], references: [id])
+  guide      Guide?   @relation(fields: [guideId], references: [id])
+  package    Package? @relation(fields: [packageId], references: [id])
+}
+
+model Package {
+  id                 String        @id @default(uuid())
+  name               String
+  description        String
+  type               PackageType
+  price              Float
+  duration           Int          // days
+  features           String[]
+  inclusions         String[]
+  exclusions         String[]
+  images             String[]
+  isActive           Boolean      @default(true)
+  seasonalDiscount   Float?
+  maxParticipants    Int          @default(20)
+  difficulty         Difficulty   @default(EASY)
+  culturalHighlights String[]
+  createdAt          DateTime     @default(now())
+  updatedAt          DateTime     @updatedAt
+
+  // Relations
+  itinerary          ItineraryItem[]
+  reviews            Review[]
+  subscriptions      Subscription[]
+}
+
+enum PackageType {
+  FESTIVAL
+  PEAK_SEASON
+  OFF_SEASON
+  CULTURAL_IMMERSION
+  ADVENTURE
+  RELIGIOUS
+  FAMILY
+  LUXURY
+}
+
+enum Difficulty {
+  EASY
+  MODERATE
+  CHALLENGING
+}
+
+model ItineraryItem {
+  id          String   @id @default(uuid())
+  packageId   String
+  day         Int
+  title       String
+  description String
+  latitude    Float
+  longitude   Float
+  locationName String
+  startTime   String
+  endTime     String
+  activities  String[]
+
+  package     Package  @relation(fields: [packageId], references: [id], onDelete: Cascade)
+}
+
+model Subscription {
+  id         String              @id @default(uuid())
+  userId     String
+  packageId  String
+  startDate  DateTime
+  endDate    DateTime
+  status     SubscriptionStatus  @default(ACTIVE)
+  amount     Float
+  paymentId  String
+  autoRenew  Boolean             @default(true)
+  createdAt  DateTime            @default(now())
+  updatedAt  DateTime            @updatedAt
+
+  user       User                @relation(fields: [userId], references: [id])
+  package    Package             @relation(fields: [packageId], references: [id])
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  EXPIRED
+  CANCELLED
+  PENDING_PAYMENT
+  SUSPENDED
+}
+
+model CulturalSite {
+  id                   String   @id @default(uuid())
+  name                 String
+  description          String
+  type                 CulturalSiteType
+  latitude             Float
+  longitude            Float
+  address              String
+  culturalSignificance String
+  historicalPeriod     String?
+  openingHoursJson     Json?
+  entryFee             Float?
+  images               String[]
+  facts                String[]
+  localInsights        String[]
+  isHiddenGem          Boolean  @default(false)
+  rating               Float    @default(0)
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+}
+
+enum CulturalSiteType {
+  CULTURAL_SITE
+  HISTORICAL_MONUMENT
+  RELIGIOUS_SITE
+  MUSEUM
+  CAVE
+  HIDDEN_GEM
+  NATURAL_LANDMARK
+  RESTAURANT
+  ACCOMMODATION
+  TRANSPORT_HUB
+  OTHER
+}
+
