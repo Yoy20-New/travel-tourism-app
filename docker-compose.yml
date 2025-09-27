@@ -1,41 +1,42 @@
 version: '3.8'
 
 services:
-  # PostgreSQL Database
-  postgres:
-    image: postgres:15-alpine
-    container_name: travel-postgres
+  # MongoDB for development
+  mongo:
+    image: mongo:6
+    container_name: travel-mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
     environment:
-      POSTGRES_USER: travel_user
-      POSTGRES_PASSWORD: travel_password
-      POSTGRES_DB: travel_tourism_db
-    ports:
-      - "5432:5432"
+      MONGO_INITDB_DATABASE: tourify
     volumes:
-      - postgres_data:/var/lib/postgresql/data
-      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - mongo_data:/data/db
     networks:
       - travel-network
 
-  # Redis (optional, for caching)
-  redis:
-    image: redis:7-alpine
-    container_name: travel-redis
+  # Optional: Mongo Express UI
+  mongo-express:
+    image: mongo-express:1.0.2-18
+    container_name: travel-mongo-express
+    restart: unless-stopped
+    depends_on:
+      - mongo
+    environment:
+      ME_CONFIG_MONGODB_SERVER: mongo
+      ME_CONFIG_MONGODB_ENABLE_ADMIN: "true"
     ports:
-      - "6379:6379"
-    volumes:
-      - redis_data:/data
+      - "8081:8081"
     networks:
       - travel-network
 
-  # Backend API
+  # Backend API (optional to run via Docker; recommended to run locally in dev)
   backend:
     build: ./backend
     container_name: travel-backend
     environment:
-      DATABASE_URL: postgresql://travel_user:travel_password@postgres:5432/travel_tourism_db
+      MONGODB_URI: mongodb://mongo:27017/tourify
       JWT_SECRET: your_development_jwt_secret_key
-      REDIS_URL: redis://redis:6379
       NODE_ENV: development
     ports:
       - "5000:5000"
@@ -44,8 +45,7 @@ services:
       - /app/node_modules
       - /app/dist
     depends_on:
-      - postgres
-      - redis
+      - mongo
     networks:
       - travel-network
     command: npm run dev
@@ -71,8 +71,7 @@ services:
     command: npm run dev
 
 volumes:
-  postgres_data:
-  redis_data:
+  mongo_data:
 
 networks:
   travel-network:
