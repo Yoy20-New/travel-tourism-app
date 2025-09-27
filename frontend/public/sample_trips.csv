@@ -1,0 +1,6 @@
+tripNumber,originName,originLat,originLng,destName,destLat,destLng,startTime,endTime,mode,purpose,notes,companions
+TRP-001-2024,Home,40.7505,-73.9934,Ancient Temple of Wisdom,40.7589,-73.9851,2024-01-15T09:00:00Z,2024-01-15T17:00:00Z,CAR,CULTURAL,Visited with family for cultural exploration,"[{""name"":""Jane Doe"",""age"":32,""relation"":""Spouse""},{""name"":""Tommy Doe"",""age"":8,""relation"":""Child""}]"
+TRP-002-2024,Hotel Downtown,40.7614,-73.9776,Secret Artisan Cave,40.7505,-73.9934,2024-01-16T10:30:00Z,2024-01-16T15:30:00Z,WALKING,CULTURAL,Pottery workshop experience,"[{""name"":""Jane Doe"",""age"":32,""relation"":""Spouse""}]"
+TRP-003-2024,Secret Artisan Cave,40.7505,-73.9934,Heritage Museum,40.7614,-73.9776,2024-01-16T16:00:00Z,2024-01-16T18:00:00Z,BUS,CULTURAL,Museum visit after cave tour,
+TRP-004-2024,Heritage Museum,40.7614,-73.9776,Central Park,40.7829,-73.9654,2024-01-17T11:00:00Z,2024-01-17T14:00:00Z,WALKING,LEISURE,Relaxing walk in the park after museum visits,
+TRP-005-2024,Central Park,40.7829,-73.9654,Times Square,40.7580,-73.9855,2024-01-17T19:00:00Z,2024-01-17T22:00:00Z,TRAIN,LEISURE,Evening entertainment and dinner,"[{""name"":""Jane Doe"",""age"":32,""relation"":""Spouse""},{""name"":""Tommy Doe"",""age"":8,""relation"":""Child""}]"

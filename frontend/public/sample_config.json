@@ -1,0 +1,70 @@
+{
+  "appSettings": {
+    "theme": "cultural",
+    "defaultMapCenter": {
+      "lat": 40.7589,
+      "lng": -73.9851
+    },
+    "defaultZoom": 12
+  },
+  "culturalSites": [
+    {
+      "name": "Sample Cultural Site 1",
+      "description": "A beautiful example of traditional architecture",
+      "type": "CULTURAL_SITE",
+      "latitude": 40.7589,
+      "longitude": -73.9851,
+      "address": "123 Cultural Street, Heritage District",
+      "culturalSignificance": "Important historical landmark from the 15th century",
+      "historicalPeriod": "15th Century",
+      "entryFee": 20.0,
+      "facts": [
+        "Built over 500 years ago",
+        "Survived multiple natural disasters",
+        "Features unique architectural elements"
+      ],
+      "localInsights": [
+        "Best visited in early morning for photos",
+        "Local guide available on weekends",
+        "Special ceremonies held monthly"
+      ],
+      "isHiddenGem": true
+    }
+  ],
+  "packages": [
+    {
+      "name": "Heritage Discovery Package",
+      "description": "Explore the rich cultural heritage of the region",
+      "type": "CULTURAL_IMMERSION",
+      "price": 199.99,
+      "duration": 2,
+      "features": [
+        "Expert guide included",
+        "Traditional meals",
+        "Transportation provided"
+      ],
+      "inclusions": [
+        "All entrance fees",
+        "Professional photography",
+        "Cultural workshop"
+      ],
+      "exclusions": [
+        "Personal expenses",
+        "Travel insurance"
+      ],
+      "maxParticipants": 10,
+      "difficulty": "EASY",
+      "culturalHighlights": [
+        "Traditional crafts demonstration",
+        "Local cuisine tasting",
+        "Historical site tour"
+      ]
+    }
+  ],
+  "preferences": {
+    "notifications": true,
+    "language": "en",
+    "currency": "USD",
+    "units": "metric"
+  }
+}

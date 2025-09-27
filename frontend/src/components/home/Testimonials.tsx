@@ -40,7 +40,7 @@ export default function Testimonials() {
             Says
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            From researchers to travelers, see how TravelCulture is making a difference 
+            From researchers to travelers, see how Tourify is making a difference
             in cultural exploration and scientific research.
           </p>
         </div>
@@ -55,7 +55,7 @@ export default function Testimonials() {
               </div>
               
               <blockquote className="text-gray-700 italic">
-                "{testimonial.text}"
+                &ldquo;{testimonial.text}&rdquo;
               </blockquote>
               
               <div className="flex items-center gap-3 pt-2">

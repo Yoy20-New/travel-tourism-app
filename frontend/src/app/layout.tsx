@@ -15,10 +15,10 @@ const poppins = Poppins({
 })
 
 export const metadata: Metadata = {
-  title: 'TravelCulture - Discover Hidden Gems & Cultural Treasures',
+  title: 'Tourify - Discover Hidden Gems & Cultural Treasures',
   description: 'A comprehensive travel platform for discovering cultural sites, booking local guides, and capturing your journey data.',
   keywords: 'travel, tourism, culture, guides, trips, cultural sites, hidden gems',
-  authors: [{ name: 'TravelCulture Team' }],
+  authors: [{ name: 'Tourify Team' }],
   viewport: 'width=device-width, initial-scale=1',
   robots: 'index, follow',
 }

@@ -8,7 +8,7 @@ export default function Footer() {
           <div className="space-y-4">
             <div className="flex items-center gap-2">
               <span className="inline-block h-8 w-8 rounded-lg bg-cultural-gradient" />
-              <span className="font-display text-xl font-semibold text-white">TravelCulture</span>
+              <span className="font-display text-xl font-semibold text-white">Tourify</span>
             </div>
             <p className="text-sm">
               Discover hidden cultural gems and connect with local guides for authentic travel experiences.
@@ -47,7 +47,7 @@ export default function Footer() {
         
         <div className="border-t border-gray-800 mt-8 pt-8 flex flex-col sm:flex-row justify-between items-center">
           <p className="text-sm">
-            © {new Date().getFullYear()} TravelCulture. All rights reserved.
+            © {new Date().getFullYear()} Tourify. All rights reserved.
           </p>
           <div className="flex items-center gap-4 mt-4 sm:mt-0">
             <span className="text-sm">Made with ❤️ for NATPAC scientists</span>

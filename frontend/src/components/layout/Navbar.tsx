@@ -9,7 +9,7 @@ export default function Navbar() {
       <div className="container-custom h-16 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2">
           <span className="inline-block h-8 w-8 rounded-lg bg-cultural-gradient" />
-          <span className="font-display text-xl font-semibold">TravelCulture</span>
+          <span className="font-display text-xl font-semibold">Tourify</span>
         </Link>
         <nav className="hidden md:flex items-center gap-6 text-sm">
           <Link href="/trips" className="hover:text-primary-600">Trips</Link>
