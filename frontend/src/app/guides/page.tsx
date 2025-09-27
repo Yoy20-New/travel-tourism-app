@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
+import { formatIndianCurrency } from '@/lib/utils'
 
 export default function GuidesPage() {
   return (
@@ -51,7 +52,7 @@ export default function GuidesPage() {
 
                 <div className="flex items-center justify-between">
                   <span className="text-lg font-semibold text-cultural-600">
-                    $45/day
+                    {formatIndianCurrency(3700 + (item * 100))}/day
                   </span>
                   <Link
                     href={`/guides/${item}`}
