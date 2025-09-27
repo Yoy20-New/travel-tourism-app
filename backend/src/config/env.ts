@@ -9,6 +9,8 @@ export const env = {
 
   // Database
   DATABASE_URL: process.env.DATABASE_URL || '',
+  MONGODB_URI: process.env.MONGODB_URI || 'mongodb://localhost:27017/tourify',
+  IN_MEMORY_MONGO: process.env.IN_MEMORY_MONGO === 'true',
 
   // JWT
   JWT_SECRET: process.env.JWT_SECRET || 'fallback_secret_key',
@@ -65,7 +67,8 @@ export const env = {
 
 // Validate required environment variables
 const requiredEnvVars = [
-  'DATABASE_URL',
+  // 'DATABASE_URL', // PostgreSQL - not required for MongoDB setup
+  'MONGODB_URI',
   'JWT_SECRET',
 ] as const
 
